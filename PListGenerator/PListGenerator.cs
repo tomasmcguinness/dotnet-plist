@@ -33,7 +33,7 @@ namespace PListGenerator
         {
             using (MemoryStream ms = new MemoryStream())
             {
-                xmlDoc.Save(ms);
+                xmlDoc.Save(ms, SaveOptions.DisableFormatting);
                 return ms.ToArray();
             }
         }

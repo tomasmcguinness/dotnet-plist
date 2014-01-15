@@ -62,6 +62,14 @@ namespace PListGenerator
             return this as T;
         }
 
+        public T AddData(string key, object value)
+        {
+            AddKey(key);
+            AddValue("data", value);
+
+            return this as T;
+        }
+
         private void AddKey(string key)
         {
             XElement keyElement = new XElement("key", key);
