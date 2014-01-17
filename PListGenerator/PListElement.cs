@@ -31,6 +31,13 @@ namespace PListGenerator
             return array;
         }
 
+        public T AddString(string value)
+        {
+            AddValue("string", value);
+
+            return this as T;
+        }
+
         public T AddString(string key, string value)
         {
             AddKey(key);

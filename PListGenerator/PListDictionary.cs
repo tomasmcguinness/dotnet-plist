@@ -14,10 +14,5 @@ namespace PListGenerator
             this.rootElement = new XElement("dict");
             parentElement.Add(this.rootElement);
         }
-
-        public void AddData(string p1, string p2)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
