@@ -33,7 +33,7 @@ You can then add the various property values such as string, integer, bool etc.
     dictionary.AddString("PayloadIdentifier", "com.coldbear.mdm");
     dictionary.AddString("PayloadOrganization", "Cold Bear");
     dictionary.AddBool("PayloadRemovalDisallowed");
-    dictionary.AddString("PayloadUUID", Guid.NewGuid().ToString());
+    dictionary.AddString("PayloadUUID", PListGenerator.NewUUID());
     dictionary.AddInteger("PayloadVersion", 1);
 
 You can also string the commands together e.g. create a dictionary and add a key/value to it.
@@ -47,6 +47,14 @@ Arrays are added in the same way
 Once you're finished populating the PList, just call GetXML() on the generator to return a byte[] containing the XML.
 
 	byte[] xmlBody = generator.GetXml();
+
+You can also return a string
+
+	string xmlString = generator.GetString();
+
+To create UUIDs, there is a convenience method on PListGenerator
+
+	string UUID = PListGenerator.NewUUID()
 
 ##Future Development
 
