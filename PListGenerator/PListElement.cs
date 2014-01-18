@@ -72,7 +72,7 @@ namespace PListGenerator
         public T AddData(string key, object value)
         {
             AddKey(key);
-            AddValue("data", value);
+            AddValue("data", "\n" + Encoding.ASCII.GetString((byte[])value) + "\n");
 
             return this as T;
         }

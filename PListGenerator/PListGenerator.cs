@@ -41,8 +41,7 @@ namespace PListGenerator
 
             XmlWriterSettings xws = new XmlWriterSettings();
             xws.OmitXmlDeclaration = false;
-            xws.IndentChars = "\t";
-            //xws.NewLineChars = "\n";
+            xws.NewLineHandling = NewLineHandling.None;
             xws.Indent = true;
             xws.Encoding = new System.Text.UTF8Encoding(false);
             xws.ConformanceLevel = ConformanceLevel.Document;
@@ -56,6 +55,16 @@ namespace PListGenerator
 
                 return ms.ToArray();
             }
+        }
+
+        public string GetString()
+        {
+            return Encoding.UTF8.GetString(this.GetXml());
+        }
+
+        public static string NewUUID()
+        {
+            return Guid.NewGuid().ToString().ToUpper();
         }
     }
 }
