@@ -7,7 +7,7 @@
     <ProjectGuid>{95F2C28B-B3C8-4804-AA0C-609506B435E4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PListGenerator</RootNamespace>
+    <RootNamespace>PListFormatter</RootNamespace>
     <AssemblyName>PListGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -42,7 +42,11 @@
     <Compile Include="PListArray.cs" />
     <Compile Include="PListDictionary.cs" />
     <Compile Include="PListElement.cs" />
-    <Compile Include="PListGenerator.cs" />
+    <Compile Include="PList.cs" />
+    <Compile Include="PListBoolElement.cs" />
+    <Compile Include="PListDataElement.cs" />
+    <Compile Include="PListIntegerElement.cs" />
+    <Compile Include="PListStringElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

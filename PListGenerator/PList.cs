@@ -7,31 +7,39 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace PListGenerator
+namespace PListFormatter
 {
-    public class PListGenerator : PListElement<PListGenerator>
+    public class PList
     {
-        XDocument xmlDoc = null;
+        //PListElement rootElement = new PListElement();
 
-        public PListGenerator()
+        public PList()
         {
-            XDocumentType docType = new XDocumentType("plist", "-//Apple//DTD PLIST 1.0//EN", "http://www.apple.com/DTDs/PropertyList-1.0.dtd", null);
-            xmlDoc = new XDocument(docType);
-
-            this.rootElement = new XElement("plist");
-            this.rootElement.Add(new XAttribute("version", "1.0"));
-
-            xmlDoc.Add(this.rootElement);
+            this.RootElement = new PListDictionary();
         }
 
-        public static PListGenerator New()
+        public static PList New()
         {
-            PListGenerator generator = new PListGenerator();
+            PList generator = new PList();
             return generator;
         }
 
+        public PListElement RootElement { get; private set; }
+
         public byte[] GetXml()
         {
+            XDocument xmlDoc = null;
+
+            XDocumentType docType = new XDocumentType("plist", "-//Apple//DTD PLIST 1.0//EN", "http://www.apple.com/DTDs/PropertyList-1.0.dtd", null);
+            xmlDoc = new XDocument(docType);
+
+            XElement rootElement = new XElement("plist");
+            rootElement.Add(new XAttribute("version", "1.0"));
+
+            xmlDoc.Add(rootElement);
+
+            this.RootElement.AppendToXml(rootElement);
+
             // Corrects an issue with the XML generation where a [] is being inserted into the DOCTYPE.
             //
             if (xmlDoc.DocumentType != null)
