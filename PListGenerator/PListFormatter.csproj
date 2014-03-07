@@ -45,6 +45,7 @@
     <Compile Include="PList.cs" />
     <Compile Include="PListBoolElement.cs" />
     <Compile Include="PListDataElement.cs" />
+    <Compile Include="PListRealElement.cs" />
     <Compile Include="PListIntegerElement.cs" />
     <Compile Include="PListStringElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

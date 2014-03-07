@@ -22,21 +22,29 @@ namespace PListFormatter
 
         private void Init()
         {
-            this.Elements = new List<PListElement>();
+            this.Elements = new Dictionary<string, PListElement>();
         }
 
-        public List<PListElement> Elements { get; private set; }
+        public Dictionary<string, PListElement> Elements { get; private set; }
+
+        public dynamic this[string index]
+        {
+            get
+            {
+                return Elements[index].Value;
+            }
+        }
 
         protected override void AddElement(PListElement element)
         {
-            Elements.Add(element);
+            Elements.Add(element.Key, element);
         }
 
         internal override void AppendToXml(XElement parentElement)
         {
-            if (Key != null)
+            if (key != null)
             {
-                XElement keyElement = new XElement("key", Key);
+                XElement keyElement = new XElement("key", key);
                 parentElement.Add(keyElement);
             }
 
@@ -44,10 +52,15 @@ namespace PListFormatter
 
             foreach (var element in Elements)
             {
-                element.AppendToXml(dictElement);
+                element.Value.AppendToXml(dictElement);
             }
 
             parentElement.Add(dictElement);
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return Elements.ContainsKey(key);
         }
     }
 }

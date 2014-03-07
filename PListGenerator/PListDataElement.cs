@@ -17,7 +17,17 @@ namespace PListFormatter
         {
             AddKeyElement(parentElement);
 
-            XElement valueElement = new XElement("data", "\n" + Encoding.ASCII.GetString((byte[])Value) + "\n");
+            XElement valueElement =null;
+
+            if(value as string != null)
+            {
+                valueElement = new XElement("data", "\n" + Value + "\n");
+            }
+            else
+            {
+                valueElement= new XElement("data", "\n" + Encoding.ASCII.GetString((byte[])value) + "\n");
+            }
+            
             parentElement.Add(valueElement);
         }
     }

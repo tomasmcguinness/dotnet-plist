@@ -11,20 +11,106 @@ namespace PListFormatter
 {
     public class PList
     {
-        //PListElement rootElement = new PListElement();
-
         public PList()
         {
-            this.RootElement = new PListDictionary();
+            this.RootDictionary = new PListDictionary();
         }
 
-        public static PList New()
+        public PList(Stream stream)
         {
-            PList generator = new PList();
-            return generator;
+            this.RootDictionary = new PListDictionary();
+            Load(stream);
         }
 
-        public PListElement RootElement { get; private set; }
+        private void Load(Stream stream)
+        {
+            XDocument doc = XDocument.Load(stream);
+            XElement plist = doc.Element("plist");
+            XElement dict = plist.Element("dict");
+
+            var dictElements = dict.Elements();
+            ParseDictionary(this.RootDictionary, dictElements);
+        }
+
+        public PListDictionary RootDictionary { get; private set; }
+
+        public dynamic this[string index]
+        {
+            get
+            {
+                return RootDictionary[index];
+            }
+        }
+
+        public bool ContainsKey(string key)
+        {
+            return RootDictionary.ContainsKey(key);
+        }
+
+        private void ParseDictionary(PListDictionary dict, IEnumerable<XElement> elements)
+        {
+            for (int i = 0; i < elements.Count(); i += 2)
+            {
+                XElement key = elements.ElementAt(i);
+                XElement val = elements.ElementAt(i + 1);
+
+                dict.Elements.Add(key.Value, CreateElement(key, val));
+            }
+        }
+
+        private void ParseArray(PListArray array, IEnumerable<XElement> elements)
+        {
+            for (int i = 0; i < elements.Count(); i++)
+            {
+                XElement key = elements.ElementAt(i);
+
+                array.Elements.Add(CreateElement(null, key));
+            }
+        }
+
+        private PListElement CreateElement(XElement key, XElement val)
+        {
+            PListElement element = null;
+
+            switch (val.Name.ToString())
+            {
+                case "data":
+                    element = new PListDataElement(key.Value, val.Value);
+                    break;
+                case "string":
+                    element = new PListStringElement(key.Value, val.Value);
+                    break;
+                case "integer":
+                    element = new PListIntegerElement(key.Value, int.Parse(val.Value));
+                    break;
+                case "real":
+                    element = new PListRealElement(key.Value, float.Parse(val.Value));
+                    break;
+                case "true":
+                    element = new PListBoolElement(key.Value, true);
+                    break;
+                case "false":
+                    element = new PListBoolElement(key.Value, false);
+                    break;
+                case "dict":
+                    if (key == null)
+                    {
+                        element = new PListDictionary();
+                    }
+                    else
+                    {
+                        element = new PListDictionary(key.Value);
+                    }
+                    ParseDictionary((PListDictionary)element, val.Elements());
+                    break;
+                case "array":
+                    element = new PListArray(key.Value);
+                    ParseArray((PListArray)element, val.Elements());
+                    break;
+            }
+
+            return element;
+        }
 
         public byte[] GetXml()
         {
@@ -38,7 +124,7 @@ namespace PListFormatter
 
             xmlDoc.Add(rootElement);
 
-            this.RootElement.AppendToXml(rootElement);
+            this.RootDictionary.AppendToXml(rootElement);
 
             // Corrects an issue with the XML generation where a [] is being inserted into the DOCTYPE.
             //

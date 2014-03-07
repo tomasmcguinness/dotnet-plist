@@ -25,5 +25,28 @@ namespace PListFormatter
         {
             return Elements.GetEnumerator();
         }
+
+        protected override void AddElement(PListElement element)
+        {
+            Elements.Add(element);
+        }
+
+        internal override void AppendToXml(XElement parentElement)
+        {
+            if (key != null)
+            {
+                XElement keyElement = new XElement("key", key);
+                parentElement.Add(keyElement);
+            }
+
+            XElement arrayElement = new XElement("array");
+
+            foreach (var element in Elements)
+            {
+                element.AppendToXml(arrayElement);
+            }
+
+            parentElement.Add(arrayElement);
+        }
     }
 }

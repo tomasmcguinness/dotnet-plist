@@ -9,29 +9,45 @@ namespace PListFormatter
 {
     public abstract class PListElement
     {
-        protected string Key;
+        protected string key;
         private string ValueTypeName;
-        protected object Value;
+        protected object value;
 
         public PListElement()
         { }
 
         public PListElement(string key)
         {
-            this.Key = key;
+            this.key = key;
         }
 
         public PListElement(string key, object value)
         {
-            this.Key = key;
-            this.Value = value;
+            this.key = key;
+            this.value = value;
         }
 
         public PListElement(string key, string valueTypeName, object value)
         {
-            this.Key = key;
+            this.key = key;
             this.ValueTypeName = valueTypeName;
-            this.Value = value;
+            this.value = value;
+        }
+
+        public string Key
+        {
+            get
+            {
+                return key;
+            }
+        }
+
+        public object Value
+        {
+            get
+            {
+                return value;
+            }
         }
 
         public PListDictionary AddDictionary(string key)
@@ -54,14 +70,6 @@ namespace PListFormatter
             AddElement(array);
             return array;
         }
-
-        //public PListElement AddString(string value)
-        //{
-        //    PListStringElement element = new PListStringElement()
-        //    AddValue("string", value);
-
-        //    return this;
-        //}
 
         public PListElement AddString(string key, string value)
         {
@@ -96,28 +104,21 @@ namespace PListFormatter
             return this;
         }
 
-        //public PListElement AddData(string key, string value)
-        //{
-        //    AddKey(key);
-        //    XElement valueElement = XElement.Parse(value);
-        //    rootElement.Add(valueElement);
-        //    return this;
-        //}
-
-        //private void AddKey(string key)
-        //{
-        //    XElement keyElement = new XElement("key", key);
-        //    rootElement.Add(keyElement);
-        //}
+        public PListElement AddData(string key, string value)
+        {
+            PListDataElement element = new PListDataElement(key, value);
+            AddElement(element);
+            return this;
+        }
 
         protected virtual void AddElement(PListElement element)
         {
-            // NO OP
+            throw new InvalidOperationException("You cannot add a child element");
         }
 
         protected virtual void AddKeyElement(XElement parentElement)
         {
-            XElement keyElement = new XElement("key", Key);
+            XElement keyElement = new XElement("key", key);
             parentElement.Add(keyElement);
         }
 
