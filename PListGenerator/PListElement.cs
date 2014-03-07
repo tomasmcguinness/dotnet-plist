@@ -42,7 +42,7 @@ namespace PListFormatter
             }
         }
 
-        public object Value
+        public virtual object Value
         {
             get
             {

@@ -16,6 +16,22 @@ namespace PListFormatter
 
         public List<PListElement> Elements { get; private set; }
 
+        public object this[int index]
+        {
+            get
+            {
+                return Elements[index];
+            }
+        }
+
+        public override object Value
+        {
+            get
+            {
+                return this;
+            }
+        }
+
         public IEnumerator<PListElement> GetEnumerator()
         {
             return Elements.GetEnumerator();
