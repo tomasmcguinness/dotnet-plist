@@ -13,6 +13,8 @@ namespace PListFormatter.Tests
             using (var stream = File.Open("MDM.mobileconfig", FileMode.Open))
             {
                 var plist = new PList(stream);
+
+                var consent = plist["ConsentText"];
             }
         }
     }

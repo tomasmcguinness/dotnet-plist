@@ -38,7 +38,8 @@ namespace PListFormatter
         {
             get
             {
-                return RootDictionary[index];
+                dynamic value = RootDictionary[index];
+                return value;
             }
         }
 
@@ -54,7 +55,14 @@ namespace PListFormatter
                 XElement key = elements.ElementAt(i);
                 XElement val = elements.ElementAt(i + 1);
 
-                dict.Elements.Add(key.Value, CreateElement(key, val));
+                PListElement element = CreateElement(key, val);
+
+                if(element == null)
+                {
+                    throw new InvalidOperationException("Key " + key.Value + " has no value");
+                }
+
+                dict.Elements.Add(key.Value,element);
             }
         }
 

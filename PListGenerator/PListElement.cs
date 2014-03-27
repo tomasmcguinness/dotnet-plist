@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace PListFormatter
@@ -71,6 +73,13 @@ namespace PListFormatter
             return array;
         }
 
+        public PListElement AddString(string value)
+        {
+            PListStringElement element = new PListStringElement(value);
+            AddElement(element);
+            return this;
+        }
+
         public PListElement AddString(string key, string value)
         {
             PListStringElement element = new PListStringElement(key, value);
@@ -132,6 +141,50 @@ namespace PListFormatter
         {
             AddKeyElement(parentElement);
             AddValueElement(parentElement);
+        }
+
+        public byte[] GetXml()
+        {
+            XDocument xmlDoc = null;
+
+            XDocumentType docType = new XDocumentType("plist", "-//Apple//DTD PLIST 1.0//EN", "http://www.apple.com/DTDs/PropertyList-1.0.dtd", null);
+            xmlDoc = new XDocument(docType);
+
+            XElement rootElement = new XElement("plist");
+            rootElement.Add(new XAttribute("version", "1.0"));
+
+            xmlDoc.Add(rootElement);
+
+            this.AppendToXml(rootElement);
+
+            // Corrects an issue with the XML generation where a [] is being inserted into the DOCTYPE.
+            //
+            if (xmlDoc.DocumentType != null)
+            {
+                xmlDoc.DocumentType.InternalSubset = null;
+            }
+
+            XmlWriterSettings xws = new XmlWriterSettings();
+            xws.OmitXmlDeclaration = false;
+            xws.NewLineHandling = NewLineHandling.None;
+            xws.Indent = true;
+            xws.Encoding = new System.Text.UTF8Encoding(false);
+            xws.ConformanceLevel = ConformanceLevel.Document;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (XmlWriter writer = XmlWriter.Create(ms, xws))
+                {
+                    xmlDoc.Save(writer);
+                }
+
+                return ms.ToArray();
+            }
+        }
+
+        public override string ToString()
+        {
+            return Encoding.UTF8.GetString(this.GetXml());
         }
     }
 }
