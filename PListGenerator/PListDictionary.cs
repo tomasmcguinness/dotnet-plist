@@ -31,7 +31,16 @@ namespace PListFormatter
         {
             get
             {
-                return Elements[index].Value;
+                var value = Elements[index];
+
+                if (value.GetType() == typeof(PListDictionary) || value.GetType() == typeof(PListArray))
+                {
+                    return Elements[index];
+                }
+                else
+                {
+                    return Elements[index].Value;
+                }
             }
         }
 
