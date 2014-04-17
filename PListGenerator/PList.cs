@@ -57,12 +57,12 @@ namespace PListFormatter
 
                 PListElement element = CreateElement(key, val);
 
-                if(element == null)
+                if (element == null)
                 {
                     throw new InvalidOperationException("Key " + key.Value + " has no value");
                 }
 
-                dict.Elements.Add(key.Value,element);
+                dict.Elements.Add(key.Value, element);
             }
         }
 
@@ -83,7 +83,14 @@ namespace PListFormatter
             switch (val.Name.ToString())
             {
                 case "data":
-                    element = new PListDataElement(key.Value, val.Value);
+                    if (key == null)
+                    {
+                        element = new PListDataElement(val.Value);
+                    }
+                    else
+                    {
+                        element = new PListDataElement(key.Value, val.Value);
+                    }
                     break;
                 case "string":
                     element = new PListStringElement(key.Value, val.Value);

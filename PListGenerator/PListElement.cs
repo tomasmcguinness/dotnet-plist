@@ -52,6 +52,11 @@ namespace PListFormatter
             }
         }
 
+        public void Add(PListElement element)
+        {
+            this.AddElement(element);
+        }
+
         public PListDictionary AddDictionary(string key)
         {
             PListDictionary dictionary = new PListDictionary(key);
@@ -120,6 +125,11 @@ namespace PListFormatter
             return this;
         }
 
+        public bool AsBool()
+        {
+            return (bool)this.value;
+        }
+
         protected virtual void AddElement(PListElement element)
         {
             throw new InvalidOperationException("You cannot add a child element");
@@ -186,5 +196,7 @@ namespace PListFormatter
         {
             return Encoding.UTF8.GetString(this.GetXml());
         }
+
+
     }
 }
