@@ -22,6 +22,28 @@ namespace PListFormatter
             Load(stream);
         }
 
+        public PList(byte[] contents)
+        {
+            this.RootDictionary = new PListDictionary();
+            Load(contents);
+        }
+
+        private void Load(byte[] contents)
+        {
+            XDocument doc = null;
+
+            using (var stream = new MemoryStream(contents, false))
+            {
+                doc = XDocument.Load(stream);
+            }
+
+            XElement plist = doc.Element("plist");
+            XElement dict = plist.Element("dict");
+
+            var dictElements = dict.Elements();
+            ParseDictionary(this.RootDictionary, dictElements);
+        }
+
         private void Load(Stream stream)
         {
             XDocument doc = XDocument.Load(stream);

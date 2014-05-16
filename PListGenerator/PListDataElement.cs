@@ -9,8 +9,6 @@ namespace PListFormatter
 {
     public class PListDataElement : PListElement
     {
-        private string p;
-
         public PListDataElement(string key, object value)
             : base(key, "data", value)
         { }
@@ -28,14 +26,22 @@ namespace PListFormatter
 
             if (value as string != null)
             {
-                valueElement = new XElement("data", "\n" + Value + "\n");
+                byte[] asciiString = Encoding.ASCII.GetBytes((string)value);
+                string elementValue = this.Encode ? System.Convert.ToBase64String(asciiString) : (string)value;
+
+                valueElement = new XElement("data", elementValue);
             }
             else
             {
-                valueElement = new XElement("data", "\n" + Encoding.ASCII.GetString((byte[])value) + "\n");
+                string asciiString = Encoding.ASCII.GetString((byte[])value);
+                string elementValue = this.Encode ? System.Convert.ToBase64String((byte[])value) : asciiString;
+
+                valueElement = new XElement("data", elementValue);
             }
 
             parentElement.Add(valueElement);
         }
+
+        public bool Encode { get; set; }
     }
 }

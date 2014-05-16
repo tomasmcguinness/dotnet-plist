@@ -42,6 +42,10 @@ namespace PListFormatter
             {
                 return key;
             }
+            set
+            {
+                key = value;
+            }
         }
 
         public virtual object Value
@@ -60,6 +64,13 @@ namespace PListFormatter
         public PListDictionary AddDictionary(string key)
         {
             PListDictionary dictionary = new PListDictionary(key);
+            AddElement(dictionary);
+            return dictionary;
+        }
+
+        public PListDictionary AddDictionary(string key, PListDictionary dictionary)
+        {
+            dictionary.Key = key;
             AddElement(dictionary);
             return dictionary;
         }
@@ -113,14 +124,26 @@ namespace PListFormatter
 
         public PListElement AddData(string key, object value)
         {
+            return AddData(key, value, true);
+        }
+
+        public PListElement AddData(string key, object value, bool encode)
+        {
             PListDataElement element = new PListDataElement(key, value);
+            element.Encode = encode;
             AddElement(element);
             return this;
         }
 
         public PListElement AddData(string key, string value)
         {
+            return AddData(key, value, true);
+        }
+
+        public PListElement AddData(string key, string value, bool encode)
+        {
             PListDataElement element = new PListDataElement(key, value);
+            element.Encode = encode;
             AddElement(element);
             return this;
         }
