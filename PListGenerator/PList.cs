@@ -19,39 +19,50 @@ namespace PListFormatter
         public PList(Stream stream)
         {
             this.RootDictionary = new PListDictionary();
-            Load(stream);
+            Load(stream, false);
+        }
+
+        public PList(Stream stream, bool isBinary)
+        {
+            this.RootDictionary = new PListDictionary();
+            Load(stream, isBinary);
         }
 
         public PList(byte[] contents)
         {
             this.RootDictionary = new PListDictionary();
-            Load(contents);
+            Load(contents, false);
         }
 
-        private void Load(byte[] contents)
+        public PList(byte[] contents, bool isBinary)
         {
-            XDocument doc = null;
+            this.RootDictionary = new PListDictionary();
+            Load(contents, isBinary);
+        }
 
+        private void Load(byte[] contents, bool isBinary)
+        {
             using (var stream = new MemoryStream(contents, false))
             {
-                doc = XDocument.Load(stream);
+                Load(stream, isBinary);
             }
-
-            XElement plist = doc.Element("plist");
-            XElement dict = plist.Element("dict");
-
-            var dictElements = dict.Elements();
-            ParseDictionary(this.RootDictionary, dictElements);
         }
 
-        private void Load(Stream stream)
+        private void Load(Stream stream, bool isBinary)
         {
-            XDocument doc = XDocument.Load(stream);
-            XElement plist = doc.Element("plist");
-            XElement dict = plist.Element("dict");
+            if (isBinary)
+            {
+                ParseBinary(this.RootDictionary, stream);
+            }
+            else
+            {
+                XDocument doc = XDocument.Load(stream);
+                XElement plist = doc.Element("plist");
+                XElement dict = plist.Element("dict");
 
-            var dictElements = dict.Elements();
-            ParseDictionary(this.RootDictionary, dictElements);
+                var dictElements = dict.Elements();
+                ParseDictionary(this.RootDictionary, dictElements);
+            }
         }
 
         public PListDictionary RootDictionary { get; private set; }
@@ -85,6 +96,28 @@ namespace PListFormatter
                 }
 
                 dict.Elements.Add(key.Value, element);
+            }
+        }
+        private void ParseBinary(PListDictionary dict, Stream stream)
+        {
+            using (BinaryReader reader = new BinaryReader(stream))
+            {
+                stream.Position = 0;
+                int bpli = reader.ReadInt32();
+                int version = reader.ReadInt32();
+
+                // Read the trailer.
+                // The first six bytes of the first eight-byte block are unused, so offset by 26 instead of 32.
+                stream.Position = stream.Length - 26;
+                //this.offsetIntSize = 
+                reader.ReadByte();
+                //this.objectRefSize = 
+                reader.ReadByte();
+                int objectCount = (int)reader.ReadInt64();
+                //this.topLevelObjectOffset = (int)reader.ReadInt64().ToBigEndianConditional();
+                //this.offsetTableOffset = (int)reader.ReadInt64().ToBigEndianConditional();
+                //int offsetTableSize = this.offsetIntSize * this.objectCount;
+
             }
         }
 

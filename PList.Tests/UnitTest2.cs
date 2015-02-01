@@ -12,7 +12,18 @@ namespace PListFormatter.Tests
         {
             using (var stream = File.Open("MDM.mobileconfig", FileMode.Open))
             {
-                var plist = new PList(stream);
+                var plist = new PList(stream, false);
+
+                var consent = plist["ConsentText"];
+            }
+        }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            using (var stream = File.Open("MDM_Binary.plist", FileMode.Open))
+            {
+                var plist = new PList(stream, true);
 
                 var consent = plist["ConsentText"];
             }
