@@ -82,6 +82,13 @@ namespace PListFormatter
             return dictionary;
         }
 
+        public PListArray AddArray()
+        {
+            PListArray array = new PListArray();
+            AddElement(array);
+            return array;
+        }
+
         public PListArray AddArray(string key)
         {
             PListArray array = new PListArray(key);

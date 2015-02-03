@@ -8,6 +8,11 @@ namespace PListFormatter
 {
     public class PListArray : PListElement, IEnumerable<PListElement>
     {
+        public PListArray()
+        {
+            this.Elements = new List<PListElement>();
+        }
+
         public PListArray(string key)
             : base(key)
         {
