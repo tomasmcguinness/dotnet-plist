@@ -148,10 +148,24 @@ namespace PListFormatter
                     }
                     break;
                 case "string":
-                    element = new PListStringElement(key.Value, val.Value);
+                    if (key == null)
+                    {
+                        element = new PListStringElement(val.Value);
+                    }
+                    else
+                    {
+                        element = new PListStringElement(key.Value, val.Value);
+                    }
                     break;
                 case "integer":
-                    element = new PListIntegerElement(key.Value, int.Parse(val.Value));
+                    if (key == null)
+                    {
+                        element = new PListIntegerElement(key.Value, int.Parse(val.Value));
+                    }
+                    else
+                    {
+                        element = new PListIntegerElement(key.Value, int.Parse(val.Value));
+                    }
                     break;
                 case "real":
                     element = new PListRealElement(key.Value, float.Parse(val.Value));
@@ -183,6 +197,11 @@ namespace PListFormatter
         }
 
         public byte[] GetXml()
+        {
+            return GetXml(false);
+        }
+
+        public byte[] GetXml(bool indent)
         {
             XDocument xmlDoc = null;
 
