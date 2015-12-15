@@ -160,7 +160,7 @@ namespace PListFormatter
                 case "integer":
                     if (key == null)
                     {
-                        element = new PListIntegerElement(key.Value, int.Parse(val.Value));
+                        element = new PListIntegerElement(int.Parse(val.Value));
                     }
                     else
                     {
