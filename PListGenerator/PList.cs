@@ -22,6 +22,12 @@ namespace PListFormatter
             Load(stream, false);
         }
 
+        public PList(string xml)
+        {
+            this.RootDictionary = new PListDictionary();
+            Load(Encoding.UTF8.GetBytes(xml), false);
+        }
+
         public PList(Stream stream, bool isBinary)
         {
             this.RootDictionary = new PListDictionary();
