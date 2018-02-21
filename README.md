@@ -4,7 +4,7 @@ A .Net Library for generating PList XML files
 
 ## Why
 
-I'm a .Net developer and whilst developing a sample MDM (Mobile Device Management) solution for testing my Roomr app (www.roomrapp.com) I needed to create PList files to configure my iOS 7 device. I couldn't find a nice library for working with PList XML, so I created one.
+I'm a .Net developer and whilst developing my product TestMDM (http://www.testmdmapp.com, a way to test your app's MDM support) I needed to create PList files. I couldn't find an existing library for working with PList XML, so I created one.
 
 ## Requirements
 
