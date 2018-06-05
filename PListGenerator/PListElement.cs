@@ -226,7 +226,5 @@ namespace PListFormatter
         {
             return Encoding.UTF8.GetString(this.GetXml());
         }
-
-
     }
 }
