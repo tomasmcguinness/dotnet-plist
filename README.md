@@ -1,16 +1,16 @@
-#dotnet-plist
+# dotnet-plist
 
 A .Net Library for generating PList XML files
 
-##Why
+## Why
 
-I'm a .Net developer and whilst developing a sample MDM (Mobile Device Management) solution for testing my Roomr app (www.roomrapp.com) I needed to create PList files to configure my iOS 7 device. I couldn't find a nice library for working with PList XML, so I created one.
+I'm a .Net developer and whilst developing my product TestMDM (http://www.testmdmapp.com, a way to test your app's MDM support) I needed to create PList files. I couldn't find an existing library for working with PList XML, so I created one.
 
 ## Requirements
 
 The solution requires .Net 4.5 and Visual Studio 2012 or higher.
 
-##Technical Stuff
+## Technical Stuff
 
 To generate a PList file, start by instantiating a new PListGenerator.
 
@@ -56,14 +56,14 @@ To create UUIDs, there is a convenience method on PListGenerator
 
 	string UUID = PListGenerator.NewUUID()
 
-##Future Development
+## Future Development
 
 This library is in its infancy and there is a lot of work left to do on it. I'll be updating it over time as my needs dictate. If you want to help, please contribute.
 
-##Contribute
+## Contribute
 
 All pull requests are welcomed! If you come across an issue you cannot fix, please raise an issue or drop me an email at tomas@tomasmcguinness.com or follow me on twitter @tomasmcguinness
 
-##License
+## License
 
 dotnet-plist is distributed under the MIT license: [http://tomasmcguinness.mit-license.org/](http://tomasmcguinness.mit-license.org/)
