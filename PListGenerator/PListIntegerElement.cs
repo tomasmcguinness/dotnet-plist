@@ -8,11 +8,11 @@ namespace PListFormatter
 {
     public class PListIntegerElement : PListElement
     {
-        public PListIntegerElement(int value)
+        public PListIntegerElement(long value)
             : base(null, "integer", value)
         { }
 
-        public PListIntegerElement(string key, int value)
+        public PListIntegerElement(string key, long value)
             : base(key, "integer", value)
         { }
     }

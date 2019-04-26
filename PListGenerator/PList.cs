@@ -166,11 +166,11 @@ namespace PListFormatter
                 case "integer":
                     if (key == null)
                     {
-                        element = new PListIntegerElement(int.Parse(val.Value));
+                        element = new PListIntegerElement(long.Parse(val.Value));
                     }
                     else
                     {
-                        element = new PListIntegerElement(key.Value, int.Parse(val.Value));
+                        element = new PListIntegerElement(key.Value, long.Parse(val.Value));
                     }
                     break;
                 case "real":
