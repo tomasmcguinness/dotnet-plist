@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -143,6 +142,16 @@ namespace PListFormatter
 
             switch (val.Name.ToString())
             {
+                case "date":
+                    if (key == null)
+                    {
+                        element = new PListDateElement(DateTime.Parse(val.Value));
+                    }
+                    else
+                    {
+                        element = new PListDateElement(key.Value, DateTime.Parse(val.Value));
+                    }
+                    break;
                 case "data":
                     if (key == null)
                     {
