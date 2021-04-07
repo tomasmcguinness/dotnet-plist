@@ -1,6 +1,6 @@
 # dotnet-plist
 
-A .Net Library for generating PList XML files
+A .Net Library for reading and writing PList XML files
 
 ## Why
 
@@ -8,7 +8,7 @@ I'm a .Net developer and whilst developing my product TestMDM (http://www.testmd
 
 ## Requirements
 
-The solution requires .Net 4.5 and Visual Studio 2012 or higher.
+This library supports .Net Standard 2.0
 
 ## Technical Stuff
 
