@@ -18,7 +18,10 @@ namespace PListFormatter
         internal override void AppendToXml(XElement parentElement)
         {
             AddKeyElement(parentElement);
-            string formattedDate = ((DateTime)value).ToString("o");
+
+            // Fix the date output.
+            //
+            string formattedDate = ((DateTime)value).ToString("yyyy-MM-dd'T'hh:mm:ss'Z'");
             XElement dateElement = new XElement("date", formattedDate);
             parentElement.Add(dateElement);
         }
