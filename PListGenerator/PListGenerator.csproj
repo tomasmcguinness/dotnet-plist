@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.1.0</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/tomasmcguinness/dotnet-plist</PackageProjectUrl>
+    <PackageId>dotnet-plist</PackageId>
+    <Authors>Tomas McGuinness</Authors>
+    <Company>Cold Bear Ltd</Company>
+    <Description>dotnet-plist allows you to generate and read binary and XML Plist files.</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
