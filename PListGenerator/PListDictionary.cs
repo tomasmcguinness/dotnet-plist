@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
 namespace PListFormatter
 {
-    public class PListDictionary : PListElement
+    public class PListDictionary : PListElement, IEnumerable<KeyValuePair<string, PListElement>>
     {
         public PListDictionary()
         {
@@ -68,6 +69,14 @@ namespace PListFormatter
             return Elements.ContainsKey(key);
         }
 
+        public IEnumerator<KeyValuePair<string, PListElement>> GetEnumerator()
+        {
+            return Elements.GetEnumerator();
+        }
 
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Elements.GetEnumerator();
+        }
     }
 }

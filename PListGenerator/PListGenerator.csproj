@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.1.0</Version>
+    <Version>1.1.2</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/tomasmcguinness/dotnet-plist</PackageProjectUrl>
     <PackageId>dotnet-plist</PackageId>
@@ -10,6 +10,7 @@
     <Company>Cold Bear Ltd</Company>
     <Description>dotnet-plist allows you to generate and read binary and XML Plist files.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>The PListDictionary now supports IEnumerable&lt;&gt;</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>
